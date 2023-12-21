@@ -16,6 +16,7 @@ function init() {
             type:"input",
             message:"You can enter up to 3 characters",
             name:"textInput"
+          
         },
         {
             type:"input",
@@ -36,11 +37,16 @@ function init() {
     ])
     .then((response)=>{
         const {textInput, textColor, shapesChoice, shapeColor} = response
+        if (textInput.length > 3) {
+            console.log("Text content must be less or equal to 3 characters");
+            init(); 
+        } else {
         const shapes = new Shapes()
         const text = new Text()
         const shape = shapes[shapesChoice](`"${shapeColor}"`)
         const insert = text.input(`${textInput}`,`"${textColor}"`)
         writeToFile("./examples/logo.svg", svgGenerator(shape,insert))
+        }
     })
 }
 init()
